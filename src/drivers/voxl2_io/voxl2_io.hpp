@@ -140,7 +140,8 @@ private:
 	/* Module update interval */
 	static constexpr unsigned	_current_update_interval{4000}; // 250 Hz
 
-	typedef struct {
+	// typedef struct {
+	struct voxl2_io_params_t {
 		int32_t		baud_rate{VOXL2_IO_DEFAULT_BAUD};
 		int32_t		pwm_min{0};
 		int32_t		pwm_max{0};
@@ -152,7 +153,9 @@ private:
 		int32_t		param_rc_rssi_pwm_chan{0};
 		int32_t		function_map[VOXL2_IO_OUTPUT_CHANNELS] {0, 0, 0, 0, 0, 0, 0, 0};
 		int32_t		verbose_logging{0};
-	} voxl2_io_params_t;
+	// } voxl2_io_params_t;
+	};
+	
 	voxl2_io_params_t	_parameters;
 
 	typedef enum {

@@ -138,7 +138,8 @@ private:
 
 	VoxlEscSerial		*_uart_port;
 
-	typedef struct {
+	// typedef struct {
+	struct voxl_esc_params_t {
 		int32_t		config{VOXL_ESC_UART_CONFIG};
 		int32_t		mode{VOXL_ESC_MODE};
 		int32_t		turtle_motor_expo{35};
@@ -156,7 +157,8 @@ private:
 		int32_t		publish_battery_status{0};
 		int32_t		esc_warn_temp_threshold{0};
 		int32_t		esc_over_temp_threshold{0};
-	} voxl_esc_params_t;
+	// } voxl_esc_params_t;
+	};
 
 	struct EscChan {
 		int32_t		rate_req;
@@ -176,14 +178,16 @@ private:
 		int8_t		direction;
 	} ch_assign_t;
 
-	typedef struct {
+	// typedef struct {
+	struct led_rsc_t {
 		led_control_s		control{};
 		vehicle_control_mode_s	mode{};
 		uint8_t			led_mask;// TODO led_mask[VOXL_ESC_OUTPUT_CHANNELS];
 		bool			breath_en;
 		uint8_t			breath_counter;
 		bool			test;
-	} led_rsc_t;
+	// } led_rsc_t;
+	};
 
 	ch_assign_t		_output_map[VOXL_ESC_OUTPUT_CHANNELS] {{1, 1}, {2, 1}, {3, 1}, {4, 1}};
 	MixingOutput		_mixing_output;
