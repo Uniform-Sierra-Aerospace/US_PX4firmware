@@ -263,3 +263,13 @@ PARAM_DEFINE_INT32(VOXL_ESC_T_WARN, 0);
  */
 PARAM_DEFINE_INT32(VOXL_ESC_T_OVER, 0);
 
+/**
+ * Start Turtle Mode, Ensure VOXL_ESC_MODE is set to greater than 0
+ *
+ * @group VOXL ESC
+ * @value 0 - Disabled
+ * @value 1 - Enabled
+ * @min 0
+ * @max 1
+ */
+PARAM_DEFINE_INT32(TURTLE_START, 0);

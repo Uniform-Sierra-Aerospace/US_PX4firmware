@@ -306,6 +306,14 @@ int VoxlEsc::load_params(voxl_esc_params_t *params, ch_assign_t *map)
 	param_get(param_find("VOXL_ESC_T_WARN"), &params->esc_warn_temp_threshold);
 	param_get(param_find("VOXL_ESC_T_OVER"), &params->esc_over_temp_threshold);
 
+	param_get(param_find("TURTLE_START"),  &params->turtle_start);
+
+	if (params->turtle_start < 0 || params->turtle_start > 1) {
+		PX4_ERR("Invalid parameter TURTLE_START.  Please verify parameters.");
+		params->turtle_start = 0;
+		ret = PX4_ERROR;
+	}
+
 	if (params->rpm_min >= params->rpm_max) {
 		PX4_ERR("VOXL_ESC: Invalid parameter VOXL_ESC_RPM_MIN.  Please verify parameters.");
 		params->rpm_min = 0;
@@ -1379,6 +1387,12 @@ void VoxlEsc::Run()
 
 			if (!_outputs_on) {
 
+				if (_parameters.turtle_start != 0){
+					_turtle_mode_en = true;
+				} else {
+					_turtle_mode_en = false;
+				}
+/*
 				float setpoint = VOXL_ESC_MODE_DISABLED_SETPOINT;
 
 				if (_parameters.mode == VOXL_ESC_MODE_TURTLE_AUX1) {
@@ -1394,6 +1408,7 @@ void VoxlEsc::Run()
 				} else {
 					_turtle_mode_en = false;
 				}
+*/
 			}
 		}
 
@@ -1547,6 +1562,8 @@ void VoxlEsc::print_params()
 	
 	PX4_INFO("Params: VOXL_ESC_T_WARN: %" PRId32, _parameters.esc_warn_temp_threshold);
 	PX4_INFO("Params: VOXL_ESC_T_OVER: %" PRId32, _parameters.esc_over_temp_threshold);
+
+	PX4_INFO("Params: TURTLE_START: %" PRId32, _parameters.turtle_start);
 }
 
 int VoxlEsc::print_status()

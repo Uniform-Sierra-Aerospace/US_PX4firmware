@@ -153,6 +153,7 @@ private:
 		int32_t		function_map[VOXL_ESC_OUTPUT_CHANNELS] {0, 0, 0, 0};
 		int32_t		motor_map[VOXL_ESC_OUTPUT_CHANNELS] {1, 2, 3, 4};
 		int32_t		direction_map[VOXL_ESC_OUTPUT_CHANNELS] {1, 1, 1, 1};
+		int32_t		turtle_start{false};
 		int32_t		verbose_logging{0};
 		int32_t		publish_battery_status{0};
 		int32_t		esc_warn_temp_threshold{0};
