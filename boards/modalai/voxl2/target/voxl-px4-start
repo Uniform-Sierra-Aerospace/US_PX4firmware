@@ -125,6 +125,7 @@ else
 	/bin/echo "No ESC type specified, not starting an ESC driver"
 fi
 
+qshell voxl2_io start -p 7
 
 # RC driver
 if [ "$RC" == "FAKE_RC_INPUT" ]; then
