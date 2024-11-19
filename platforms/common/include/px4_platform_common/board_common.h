@@ -747,7 +747,8 @@ inline uint16_t board_get_can_interfaces(void) { return 0x7; }
 #if defined(BOARD_HAS_VERSIONING)
 __EXPORT const char *board_get_hw_type_name(void);
 #else
-#define board_get_hw_type_name() ""
+// TODO: set name dynamically
+#define board_get_hw_type_name() "UniformSierra_Arrowhead2024"
 #endif
 
 /************************************************************************************
