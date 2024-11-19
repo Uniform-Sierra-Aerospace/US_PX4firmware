@@ -43,6 +43,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <ctype.h>
 
 #include <uORB/Publication.hpp>
 #include <uORB/topics/uORBTopics.hpp>
@@ -2093,6 +2094,47 @@ void Logger::write_version(LogType type)
 	// data versioning: increase this on every larger data change (format/semantic)
 	// 1: switch to FIFO drivers (disabled on-chip DLPF)
 	write_info(type, "ver_data_format", static_cast<uint32_t>(1));
+
+    // Serial Number
+    char px4_sn_string[15]; // 7 + 7 + 1 = 15;
+    px4_sn_string[14] = 0;
+    int sn_str_offset = 0;
+    // prefix
+    int32_t px4_sn_prefix_int = _param_sdlog_sn_prefix.get();
+    char* px4_sn_prefix_str = (char*) &px4_sn_prefix_int;
+    // Detect endian-ness (First byte is OR-ed with 1 << 7)
+    if (px4_sn_prefix_str[0] > 127) {
+        px4_sn_prefix_str[0] &= 127; // unset endian flag
+        for (int i = 0; i < 4; i++) {
+            if (isalpha(px4_sn_prefix_str[i])) {
+                px4_sn_string[sn_str_offset++] = px4_sn_prefix_str[i];
+            }
+        }
+    } else if (px4_sn_prefix_str[3] > 127) {
+        px4_sn_prefix_str[3] &= 127; // unset endian flag
+        for (int i = 3; i >= 0; i--) {
+            if (isalpha(px4_sn_prefix_str[i])) {
+                px4_sn_string[sn_str_offset++] = px4_sn_prefix_str[i];
+            }
+        }
+    }
+
+    if (sn_str_offset == 0) { // invalid sn prefix
+        snprintf(&px4_sn_string[sn_str_offset],8,"INVALID");
+        sn_str_offset += 7;
+    }
+    // id
+    int32_t px4_sn_id = _param_sdlog_sn_id.get();
+    if (px4_sn_id >= 0 && px4_sn_id <= 9999) {
+        snprintf(&px4_sn_string[sn_str_offset],5,"%04d", px4_sn_id);
+        sn_str_offset += 4;
+    } else {
+        snprintf(&px4_sn_string[sn_str_offset],8,"INVALID");
+        sn_str_offset += 7;
+    }
+    px4_sn_string[sn_str_offset] = 0;
+    
+    write_info(type, "sys_serialno", px4_sn_string);
 
 #ifndef BOARD_HAS_NO_UUID
 

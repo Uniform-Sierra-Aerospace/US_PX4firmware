@@ -400,7 +400,9 @@ private:
 		(ParamInt<px4::params::SDLOG_PROFILE>) _param_sdlog_profile,
 		(ParamInt<px4::params::SDLOG_MISSION>) _param_sdlog_mission,
 		(ParamBool<px4::params::SDLOG_BOOT_BAT>) _param_sdlog_boot_bat,
-		(ParamBool<px4::params::SDLOG_UUID>) _param_sdlog_uuid
+		(ParamBool<px4::params::SDLOG_UUID>) _param_sdlog_uuid,
+		(ParamInt<px4::params::SDLOG_SN_ID>) _param_sdlog_sn_id,
+		(ParamInt<px4::params::SDLOG_SN_PREFIX>) _param_sdlog_sn_prefix
 #if defined(PX4_CRYPTO)
 		, (ParamInt<px4::params::SDLOG_ALGORITHM>) _param_sdlog_crypto_algorithm,
 		(ParamInt<px4::params::SDLOG_KEY>) _param_sdlog_crypto_key,

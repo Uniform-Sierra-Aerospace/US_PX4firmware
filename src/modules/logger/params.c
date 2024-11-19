@@ -178,6 +178,31 @@ PARAM_DEFINE_INT32(SDLOG_DIRS_MAX, 0);
 PARAM_DEFINE_INT32(SDLOG_UUID, 1);
 
 /**
+ * Serial Number ID number
+ *
+ * Max 4 digits (will be padded with 0's)
+ * 
+ * @min 0
+ * @max 9999
+ * @group SD Logging
+ */
+PARAM_DEFINE_INT32(SDLOG_SN_ID, 0);
+
+/**
+ * Serial Number Prefix
+ *
+ * ASCII encoded SN prefix
+ * Up to 4 chars, only A-Za-z
+ * Pad beginning or end with '\0'
+ * HOWEVER: first byte has high bit set and last byte has high bit unset (to detect endian-ness)
+ * ("ARR" -> 0x41 0x52 0x52 0x00 -> 0xC1 0x52 0x52 0x00 -> -1051569664)
+ * ("ARR" -> 0x00 0x41 0x52 0x52 -> 0x80 0x41 0x52 0x52 -> -2143202734)
+ *
+ * @group SD Logging
+ */
+PARAM_DEFINE_INT32(SDLOG_SN_PREFIX, -2143202734);
+
+/**
  * Logfile Encryption algorithm
  *
  * Selects the algorithm used for logfile encryption
